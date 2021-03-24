@@ -1,17 +1,42 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import { Provider } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
+import { ThemeProvider } from '@material-ui/core/styles';
+import { CssBaseline } from '@material-ui/core';
+import store from './redux/store';
+import App from './container/App/App';
 import reportWebVitals from './reportWebVitals';
+import 'react-toastify/dist/ReactToastify.css';
+import GlobalLoading from './components/globalLoading/index';
+import theme from './commons/theme/theme';
+import GlobalModal from './components/globalMoDal/index';
+
+// const store = createStore(
+//   appReducers,
+//   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+//   applyMiddleware(thunk),
+// );
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+  <Provider store={store()}>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <ToastContainer
+        position="top-right"
+        autoClose={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+      />
+      <GlobalModal />
+      <GlobalLoading />
+      <App />
+    </ThemeProvider>
+  </Provider>,
+  document.getElementById('root'),
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
